@@ -123,6 +123,8 @@ class D(B, C):
 		C.__init__(self)
 		print("D")
 
+
+# 自测
 if __name__ == "__main__":
 	harry_potter_book = Document("hp", "J.K.Rowling", "aabbccgfdghhddee")
 	
