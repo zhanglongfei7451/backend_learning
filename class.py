@@ -78,8 +78,9 @@ class Video(Entity):
 		
 	def get_context_length(self):
 		return self.__video_length
-		
 
+
+# 抽象类是一个不能被实例化的类，为子类提供一个规范，必须按我这样定义得来
 # 抽象函数和抽象类
 # 抽象函数
 from abc import ABCMeta, abstractmethod
