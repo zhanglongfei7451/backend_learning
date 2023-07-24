@@ -1,11 +1,9 @@
 # coding:utf-8
 # 第11课，面向对象(上)
 
-### 张龙飞
 
-
-
-### liuzhongren
+# 张龙飞
+# liuzhongren
 
 # 类
 class Document():
@@ -162,4 +160,4 @@ if __name__ == "__main__":
 	# entity = Entity2()
 	# 思考题
 	d = D()
-	
+
