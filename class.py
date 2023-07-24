@@ -81,6 +81,7 @@ class Video(Entity):
 		
 
 # 抽象函数和抽象类
+# 抽象函数
 from abc import ABCMeta, abstractmethod
 class Entity2(metaclass = ABCMeta):
 	@abstractmethod
