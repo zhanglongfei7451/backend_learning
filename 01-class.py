@@ -11,7 +11,8 @@ class Document():
 		print("调用初始函数!")
 		self.title = title
 		self.author = author
-		self.__context = context # 私有属性,只能在类内部进行访问，类外访问的话只能obj._Document__context
+		self.__context = context
+	# 私有属性,只能在类内部进行访问，类外访问的话只能obj._Document__context
 		
 	def get_context_length(self):
 		return len(self.__context)

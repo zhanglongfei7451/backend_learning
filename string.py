@@ -28,17 +28,17 @@ if __name__ == "__main__":
 	print(s)
 	
 	# 字符串拼接，时间复杂度O(N)
-	s = ''
-	for n in range(0, 100000):
-		s += str(n)
-	print(s)
+	# s = ''
+	# for n in range(0, 100000):
+	# 	s += str(n)
+	# print(s)
 	
 	# join函数 时间复杂度O(N)
-	l = []
-	for n in range(0, 100000):
-		l.append(str(n))
-	l = ' '.join(l)
-	print(l)
+	# l = []
+	# for n in range(0, 100000):
+	# 	l.append(str(n))
+	# l = ' '.join(l)
+	# print(l)
 	
 	# split分割数据
 	path = "hive://ads/training_table"
@@ -49,6 +49,7 @@ if __name__ == "__main__":
 	# strip函数
 	s = " my name is jason "
 	print(s.strip())
+	print(s)
 	
 	# 字符串格式化函数
 	print("我的名字叫{},年龄{}".format("zym", str(35)))
