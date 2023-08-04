@@ -21,33 +21,33 @@ if __name__ == "__main__":
 		
 	a = 1
 	my_func1(a)
-	print(a)
+	print(a)  # 1
 	
 	def my_func2(b):
 		b = 2
 		return b
 		
 	a = my_func2(a)
-	print(a)
+	print(a)  # 2
 	# 传入可变对象
 	def my_func3(l2):
 		l2.append(4)
 	l1 = [1,2,3]
 	my_func3(l1)
-	print(l1)
+	print(l1)  # [1,2,3,4]
 	# 参数原值不变
 	def my_func4(l2):
 		l2 = l2 + [4]
 	l1 = [1,2,3]
 	my_func4(l1)
-	print(l1)
+	print(l1)  # [1,2,3]
 	# 要改变参数原值的做法
 	def my_func5(l2):
 		l2 = l2 + [4]
 		return l2
 	l1 = [1,2,3]
 	l1 = my_func5(l1)
-	print(l1)
+	print(l1)  # [1,2,3,4]
 	
 	# 思考题1
 	l1 = [1,2,3,4]
@@ -61,5 +61,5 @@ if __name__ == "__main__":
 		
 	d = {"a":1, "b":2}
 	func(d)
-	print(d)
+	print(d)  # {"a":10, "b":20}
 	
