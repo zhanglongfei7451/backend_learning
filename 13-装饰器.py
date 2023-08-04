@@ -12,13 +12,15 @@ if __name__ == "__main__":
 		print("收到一个消息:{}".format(message))
 		
 	send_message = func
-	send_message("hello world")
+	send_message("hello world")  # 收到一个消息:hello world
 	
 	# 函数作为参数
 	def root_call(fun, message):
 		print(fun(message))
 		
 	root_call(func, "函数参数")
+	# 收到一个消息:函数参数
+	# None
 	
 	# 函数嵌套
 	def fund(message):
@@ -26,7 +28,7 @@ if __name__ == "__main__":
 			print("收到一个消息:{}".format(message))
 		return get_message(message)
 	
-	fund("函数嵌套")
+	fund("函数嵌套")  # 收到一个消息:函数嵌套
 	
 	# 闭包
 	def func_closure():
@@ -35,7 +37,7 @@ if __name__ == "__main__":
 		return get_message
 		
 	send_message = func_closure()
-	send_message("返回函数对象(闭包)")
+	send_message("返回函数对象(闭包)")  # 收到一个消息:返回函数对象(闭包)
 	
 	# 简单装饰器例子
 	def my_decorator(func):
@@ -49,10 +51,15 @@ if __name__ == "__main__":
 	
 	greet = my_decorator(greet)
 	greet()
+	# 装饰器
+	# 你好
 	
 	# 原函数还是原函数吗？
-	print(greet.__name__)
+	print(greet.__name__)  # wrapper
 	print(help(greet))
+	# Help on function wrapper in module __main__:
+	# wrapper()
+
 	
 	# 使用functools.wrap
 	def my_decorator2(func):
@@ -66,8 +73,8 @@ if __name__ == "__main__":
 	def greet2(message):
 		print(message)
 	
-	greet2("functools")
-	print(greet2.__name__)
+	greet2("functools")  #
+	print(greet2.__name__)  #
 	
 	# 类装饰器
 	class Count():

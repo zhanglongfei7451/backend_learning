@@ -18,7 +18,7 @@ if __name__ == "__main__":
 	print(a is b)
 	print("id(a) = {}".format(id(a)))
 	print("id(b) = {}".format(id(b)))
-	
+	print('----------')
 	# 对于不可变变量
 	t1 = (1, 2, [3, 4])
 	t2 = (1, 2, [3, 4])
@@ -27,7 +27,7 @@ if __name__ == "__main__":
 	t1[-1].append(5)
 	print(t1 == t2)
 	print(id(t1), id(t2))
-	
+	print('----------')
 	# 浅拷贝
 	l1 = [1, 2, 3]
 	l2 = list(l1)
