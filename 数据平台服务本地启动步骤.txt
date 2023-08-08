@@ -1,0 +1,32 @@
+1.添加env、dataapi_settings.py  配置文件
+        1.1 /ops-datamart/src/api/upizza/env
+		APP_NAME=datamanage（待启动的api服务名称）
+		CONFIG_DB_xxx   （bkdata数据库配置）
+		RUN_MODEL=LOCAL  （本地测试）
+		APP_ID、APP_TOKEN  （开发者中心获取）
+	
+        1.2 /ops-datamart/src/api/upizza/conf/dataapi_settings.py
+
+2. 安装依赖
+        创建环境 conda create -n ${env} python=3.6
+    2.0 激活环境 conda activate ${env}
+    2.1 安装内置依赖 /ops-datamart/extral-lib
+        pip install xxxx.whl
+    2.2 安装全局依赖 cd /ops-datamart/src/api/upizza && pip install -r requirements.txt
+    2.3 安装服务依赖 cd /ops-datamart/src/api/${service} && pip install -r requirements.txt
+
+
+
+3. 添加PYTHONPATH:
+    一次性： export PYTHONPATH=/ops-datamart/src/api
+    永久性：在环境变量配置文件加.
+    pycharm: 将api、upizza目录mark directory as sources root
+
+4. 启动
+    cd /ops-datamart/src/api/upizza && python manage.py runserver
+
+5. 查看日志  
+    cd /ops-datamart/src/logs/bkdata/${service}
+    api.log 记录调用日志   
+    sys.log 记录运行日志
+    
