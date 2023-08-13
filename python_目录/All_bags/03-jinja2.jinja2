@@ -1,0 +1,165 @@
+<!-- 变量 -->
+<p>Hello, {{ name }}!</p>
+
+<!-- 表达式 -->
+{% if count > 10 %}
+  <p>There are too many items.</p>
+{% else %}
+  <p>There are {{ count }} items.</p>
+{% endif %}
+
+<!-- 循环 -->
+<ul>
+{% for item in items %}
+  <li>{{ item }}</li>
+{% endfor %}
+</ul>
+
+
+{#Jinja2中最强大的部分就是模板继承。模板继承允许我们创建一个基本(骨架/Base)文件，其他模版文件从该骨架文件继承，#}
+{#然后针对需要的地方进行修改。#}
+{#Jinja2的Base文件中，利用 block 关键字表示其包含的内容可以进行修改。可以帮助我们避免重复的代码和布局。#}
+
+<!-- base.html -->
+<html>
+<head>
+  <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+  {% block content %}
+  {% endblock %}
+</body>
+</html>
+
+<!-- page.html -->
+{% extends "base.html" %}
+
+{% block title %}My Page{% endblock %}
+
+{% block content %}
+  <h1>Welcome to my page!</h1>
+{% endblock %}
+
+
+{#除了模板继承之外，Jinja2 还支持模板包含，可以将重复的代码抽象为一个单独的模板，然后在其他模板中引用它。#}
+{##}
+{#这可以帮助我们避免重复的代码和布局#}
+
+<!-- header.html -->
+<header>
+  <h1>My Website</h1>
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- page.html -->
+{% include "header.html" %}
+
+<main>
+  <h1>Welcome to my page!</h1>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+</main>
+
+{% include "footer.html" %}
+
+
+{#变量可以通过 过滤器 进行修改，过滤器可以理解为是jinja2里面的内置函数和字符串处理函数#}
+
+{#safe	渲染时值不转义#}
+{#capitialize	把值的首字母转换成大写，其他子母转换为小写#}
+{#lower	把值转换成小写形式#}
+{#upper	把值转换成大写形式#}
+{#title	把值中每个单词的首字母都转换成大写#}
+{#trim	把值的首尾空格去掉#}
+{#striptags	渲染之前把值中所有的HTML标签都删掉#}
+{#join	拼接多个值为字符串#}
+{#replace	替换字符串的值#}
+{#round	默认对数字进行四舍五入，也可以用参数进行控制#}
+{#int	把值转换成整型#}
+
+
+
+{#除了基本的循环结构之外，Jinja2 还提供了一些高级的循环控制结构，比如 break、continue 和 loop.index0 等。这些控制结构可以帮助我们更好地控制循环过程。#}
+{##}
+{#在for循环中，jinja2提供了一些特殊的变量，用以来获取当前的遍历状态：#}
+{##}
+{#变量	描述#}
+{#loop.index	当前迭代的索引（从1开始）#}
+{#loop.index0	当前迭代的索引（从0开始）#}
+{#loop.first	是否是第一次迭代，返回bool#}
+{#loop.last	是否是最后一次迭代，返回bool#}
+{#loop.length	序列中的项目数量#}
+{#loop.revindex	到循环结束的次数（从1开始）#}
+{#loop.revindex0	到循环结束的次数(从0开始）#}
+
+
+{% for item in items %}
+  {% if item == 'stop' %}
+    {% break %}
+  {% elif item == 'skip' %}
+    {% continue %}
+  {% endif %}
+  <li>{{ loop.index0 }}: {{ item }}</li>
+{% endfor %}
+
+
+
+
+除了在模板中定义变量之外，Jinja2 还支持在 Python 代码中定义全局变量，然后在模板中使用。这可以帮助我们更好地组织代码和数据。
+自定义全局变量示例：
+
+from jinja2 import Environment
+# 定义全局变量
+my_var = 'Hello, world!'
+
+# 创建模板引擎
+env = Environment()
+
+# 添加全局变量
+env.globals['my_var'] = my_var
+
+# 渲染模板
+template = env.from_string('<p>{{ my_var }}</p>')
+result = template.render()
+print(result)
+
+在这个示例中，我们定义了一个全局变量 my_var，然后将它添加到模板引擎的全局变量中。最后，我们使用模板引擎渲染了一个模板，并输出了结果
+
+
+jinja2模块中有一个名为Enviroment的类，这个类的实例用于存储配置和全局对象，然后从文件系统或其他位置中加载模板。
+大多数应用都在初始化的时候创建一个Environment对象，并用它加载模板。Environment支持两种加载方式：
+
+PackageLoader：包加载器
+FileSystemLoader：文件系统加载器
+
+
+
+PackageLoader
+参数：
+
+PackageLoader()的两个参数为：python包的名称，以及模板目录名称。
+get_template()：获取模板目录下的某个具体文件。
+render()：接受变量，对模板进行渲染
+使用包加载器来加载文档的最简单的方式如下：
+
+from jinja2 import PackageLoader,Environment
+# 创建一个包加载器对象
+env = Environment(loader=PackageLoader('项目xx包目录','templates'))
+# 获取一个模板文件
+template = env.get_template('bast.html')
+# 渲染
+template.render(name='daxin',age=18)
+
+FileSystemLoader
+文件系统加载器，不需要模板文件存在某个Python包下，可以直接访问系统中的文件
+
+总结
+Jinja2 是一个强大而灵活的 Python 模板引擎，它可以帮助我们将数据渲染到各种格式的文档中。
+它具有简单而灵活的语法、支持模板继承和包含、支持过滤器和控制结构等特性。
+如果你需要在 Python 中使用模板引擎，Jinja2 是一个不错的选择。
+
