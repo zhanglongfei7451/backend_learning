@@ -7,7 +7,7 @@
 
 1. Ctrl+W——选中所选内容，再点扩大所选范围，再点再扩大，Ctrl+shift+W——回退，对于代码块选中后Ctrl+W直接选中该代码块所有内容
 
-2. Ctrl+L——注释
+2. Ctrl+/——注释
 
 3. Ctrl+D——复制该行，shift+↑——向上选中行，再Ctrl+D复制更多的行，Ctrl+Y——删除该行
 
@@ -24,4 +24,16 @@
 1. Ctrl+空格——进行代码提示，列表有哪些属性等等
 2. .if /.while——在一个变量后面加上.if 或者.while等等可以快捷写出来代码片段
 3. Ctrl+shift+空格——进行代码智能提示
+
+
+## Navigation
+
+
+
+find and replace
+
+1. Ctrl+F
+2. Ctrl+R
+3. Ctrl+shift+F
+4. Ctrl+shift+R
 
