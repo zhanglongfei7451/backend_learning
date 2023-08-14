@@ -25,3 +25,31 @@
 2. .if /.while——在一个变量后面加上.if 或者.while等等可以快捷写出来代码片段
 3. Ctrl+shift+空格——进行代码智能提示
 
+## code assistance
+
+1. 右键—local history
+2. Ctrl+Alt+L——代码格式标准化，Ctrl+Alt+shift+L——代码格式化设置
+3. Ctrl+P——函数形参提示
+4. Ctrl+Q——点一个函数上面可以看这个函数的定义，Ctrl+shift+I——看这个函数长什么样子
+5. F2定位到代码中的错误，Ctrl+F2——看错误的详细提示，Ctrl+shift+F7——选中一个词让其高亮
+
+## navigation
+
+1. 
+
+2. Ctrl+F12——查看该文件的所有属性方法，也就是结构，然后可以搜索相关方法，
+
+   Alt+7——在tool windows中打开该栏
+
+
+
+## 插件
+
+1. rainbow brackets——括号以不同的颜色进行标准
+2. indent rainbow——缩进的空格标准不同的颜色
+3. tabnine——代码提示
+4. codeglance——代码右侧的缩略图
+5. json parser——json校验格式化
+6. regex tester in pycharm——测试正则表达式
+7. markdown
+8. Statistic是一个项目统计插件
