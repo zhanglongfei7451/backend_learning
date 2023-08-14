@@ -35,13 +35,19 @@
 
 ## navigation
 
-1. 
+1. 双击shift——查找一切
 
-2. Ctrl+F12——查看该文件的所有属性方法，也就是结构，然后可以搜索相关方法，
+2. Ctrl+F——在当前文件中查找，Ctrl+R——在当前文件中替换，Ctrl+shift+R——在项目文件中替换
 
-   Alt+7——在tool windows中打开该栏
+3. Ctrl+B——跳转到方法的声明，再改方法处在Ctrl+B可以看到被用到几次该方法，Alt+F7——看到该方法的调用详细信息
 
+4. Ctrl+F12——查看该文件的所有属性方法，也就是结构，然后可以搜索相关方法，Alt+7——在tool windows中打开该栏
+5. Ctrl+E——查找最近文件，可直接搜索
 
+## git在IDE中使用
+
+1. Ctrl+K_打开commit_
+2. Ctrl+shift+K_打开commit
 
 ## 插件
 
