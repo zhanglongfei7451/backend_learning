@@ -1,3 +1,5 @@
+激活码，位置不要动——D:\google_download\win2021-2023
+
 ## onboarding tour
 
 1. Alt+Enter——show available quick-fixes//show available intentions

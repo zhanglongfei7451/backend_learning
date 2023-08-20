@@ -2,4 +2,6 @@
 list1 = [1, 2, 3, 4, 4, 4]
 s = set(list1)
 for i in s:
-    print(i)
+    print(i)  # 1 2 3 4
+print(type(list1))
+print(type(s))

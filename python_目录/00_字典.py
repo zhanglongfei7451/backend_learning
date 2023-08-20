@@ -54,8 +54,8 @@ if __name__ == "__main__":
     # 元素访问
     d = {"name": "zym", "age": 20}
     print(d["name"])  # zym
-    print(d.get("age"))  # zym
-    print(d.get("locate", "null"))  # null
+    print(d.get("age"))  # 20
+    print(d.get("locate", "null.."))  # null..
 
     s = {1, 2, 3}
     # print(s[1]) #本行出错
