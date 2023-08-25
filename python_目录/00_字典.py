@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 # 基础篇 04 字典和集合
+import json
 
 
 # 根据商品ID求价格，用列表
@@ -37,12 +38,17 @@ def find_unique_price_set(products):
 
 if __name__ == "__main__":
     # 初始化字典和集合
-    d1 = {"name": "jason", "age": 20, "gender": "male"}
+    d1 = '{"name": "张", "age": 20, "gender": "male"}'
     d2 = dict({"name": "jason", "age": 20, "gender": "male"})
     d3 = dict([('name', 'jason'), ('age', 20), ('gender', 'male')])
     d4 = dict(name='jason', age=20, gender='male')
-    print(d1 == d2 == d3 == d4)  # True
-
+    # print(d1 == d2 == d3 == d4)  #True
+    print(type(d1))
+    dd_1 = json.loads(d1)
+    print(type(dd_1))
+    dd_2 = json.dumps(dd_1)
+    print(type(dd_2))
+    print(dd_2)  # True
     s1 = {1, 2, 3}
     s2 = set([1, 2, 3])
     print(s1 == s2)  # True
