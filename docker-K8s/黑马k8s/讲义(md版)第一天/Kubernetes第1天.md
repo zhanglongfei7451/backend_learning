@@ -472,6 +472,31 @@ NAME     STATUS   ROLES    AGE     VERSION
 master   Ready    master   15m     v1.17.4
 node1    Ready    <none>   8m53s   v1.17.4
 node2    Ready    <none>   8m50s   v1.17.4
+
+kubectl get pods -o wide -n kube-system
+kubectl describe pod 【失败pod】 -n=kube-system
+journalctl -xe
+发现是版本问题
+How to fix Flannel CNI plugin. Error: [plugin flannel does not support config version “”]
+使用kubectl edit cm -n kube-system kube-flannel-cfg编辑法兰绒提供的ConfigMap，并添加缺少的行：
+
+  5 apiVersion: v1
+  6 data:
+  7   cni-conf.json: |
+  8     {
+  9      "name":"cbr0",
+ 10      "cniVersion":"0.2.0",
+ 11      "plugins": [
+重新引导节点，或者在/etc/cni/net.d/10-flannel.conflist中手动进行更改，然后再执行systemctl restart kubelet以跳过重新引导。
+
+文件/etc/cni/net.d/10-flannel.conflist在其配置中缺少cniVersion键。
+
+添加"cniVersion":"0.2.0"解决了该问题。
+
+https://www.codenong.com/58037620/
+https://github.com/Microsoft/SDN/blob/master/Kubernetes/flannel/l2bridge/cni/config/cni.conf
+
+https://blog.csdn.net/qq_26545503/article/details/123183184
 ~~~
 
 至此，kubernetes的集群环境搭建完成
