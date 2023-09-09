@@ -403,6 +403,18 @@ images=(
     etcd:3.4.3-0
     coredns:1.6.5
 )
+images=(
+    nginx:1.14-alpine
+)
+kubectl run nginx --image=k8s.gcr.io/nginx:1.14-alpine 
+
+
+docker pull registry.cn-hangzhou.aliyuncs.com/google_containers/$imageName
+docker pull registry.cn-hangzhou.aliyuncs.com/google_containers/calico/cni:v3.20.6
+docker pull nginx:1.14-alpine
+docker tag nginx:1.14-alpine k8s.gcr.io/nginx:1.14-alpine 
+ 
+nginx:1.14-alpine
 
 for imageName in ${images[@]} ; do
 	docker pull registry.cn-hangzhou.aliyuncs.com/google_containers/$imageName
@@ -480,23 +492,32 @@ journalctl -xe
 How to fix Flannel CNI plugin. Error: [plugin flannel does not support config version “”]
 使用kubectl edit cm -n kube-system kube-flannel-cfg编辑法兰绒提供的ConfigMap，并添加缺少的行：
 
-  5 apiVersion: v1
-  6 data:
-  7   cni-conf.json: |
-  8     {
-  9      "name":"cbr0",
- 10      "cniVersion":"0.2.0",
- 11      "plugins": [
-重新引导节点，或者在/etc/cni/net.d/10-flannel.conflist中手动进行更改，然后再执行systemctl restart kubelet以跳过重新引导。
 
-文件/etc/cni/net.d/10-flannel.conflist在其配置中缺少cniVersion键。
-
-添加"cniVersion":"0.2.0"解决了该问题。
-
+添加"cniVersion":"0.3.1"解决了该问题。
 https://www.codenong.com/58037620/
 https://github.com/Microsoft/SDN/blob/master/Kubernetes/flannel/l2bridge/cni/config/cni.conf
-
 https://blog.csdn.net/qq_26545503/article/details/123183184
+https://blog.csdn.net/m0_66908465/article/details/131297723?spm=1001.2014.3001.5501
+
+
+
+# 查看 kubelet 配置
+$ systemctl status -l kubelet
+ 
+$ cd /var/lib/kubelet/
+$ cp kubeadm-flags.env kubeadm-flags.env.ori
+ 
+# 把 k8s.gcr.io/pause:3.3 改成 registry.cn-hangzhou.aliyuncs.com/google_containers/pause:3.2
+ 
+$ cat /var/lib/kubelet/kubeadm-flags.env
+ 
+$ KUBELET_KUBEADM_ARGS="--cgroup-driver=systemd --network-plugin=cni --pod-infra-container-image=registry.cn-hangzhou.aliyuncs.com/google_containers/pause:3.2"
+ 
+# 重启 kubelet 服务
+$ systemctl daemon-reload
+$ systemctl restart kubelet
+
+
 ~~~
 
 至此，kubernetes的集群环境搭建完成
@@ -641,7 +662,7 @@ address: [顺义,昌平]
 
 - 声明式对象配置：通过apply命令和配置文件去操作kubernetes资源
 
-  `kubectl apply -f nginx-pod.yaml`
+  `kubectl apply -f nginx-pod.yaml`     创建和更新，删除不了
 
 | 类型           | 操作对象 | 适用环境 | 优点           | 缺点                             |
 | -------------- | -------- | -------- | -------------- | -------------------------------- |
@@ -674,8 +695,10 @@ kubectl get pod
 # 查看某个pod
 kubectl get pod pod_name
 
-# 查看某个pod,以yaml格式展示结果
-kubectl get pod pod_name -o yaml
+# 查看某个pod,以yaml格式展示结果，或者以json展示
+kubectl get pod pod_name -o yaml/json
+# 查看某个pod,展示详细信息
+kubectl get pod pod_name -o wide
 ~~~
 
 **资源类型**
@@ -1016,7 +1039,7 @@ pod "nginxpod" deleted
 
 ###  声明式对象配置
 
-声明式对象配置跟命令式对象配置很相似，但是它只有一个命令apply。
+声明式对象配置跟命令式对象配置很相似，但是它只有一个命令`*apply*`。
 
 ~~~powershell
 # 首先执行一次kubectl apply -f yaml文件，发现创建了资源
