@@ -386,13 +386,14 @@ spec:
 **命令操作**
 
 ~~~powershell
-# 命令格式: kubectl run deployment名称  [参数] 
+# 命令格式: kubectl create deployment名称  [参数] 
 # --image  指定pod的镜像
 # --port   指定端口
 # --replicas  指定创建pod数量
 # --namespace  指定namespace
-[root@master ~]# kubectl run nginx --image=nginx:1.17.1 --port=80 --replicas=3 -n dev
+[root@master ~]# kubectl create deployment nginx --image=nginx:1.17.1 -n dev
 deployment.apps/nginx created
+[root@master ~]# kubectl scale --replicas=3 deploy/nginx -n dev
 
 # 查看创建的Pod
 [root@master ~]# kubectl get pods -n dev

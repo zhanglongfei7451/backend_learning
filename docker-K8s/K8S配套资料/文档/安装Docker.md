@@ -124,7 +124,7 @@ Server:
 sudo mkdir -p /etc/docker
 sudo tee /etc/docker/daemon.json <<-'EOF'
 {
-  "registry-mirrors": ["此处修改成你自己的加速 url"]
+  "registry-mirrors": ["https://5xkv8iqc.mirror.aliyuncs.com"]
 }
 EOF
 sudo systemctl daemon-reload
