@@ -1198,3 +1198,49 @@ server块和location块都是我们要重点讲解和学习的内容，因为我
         }
     }
 ```
+# 一、zhang
+
+### Linux系统启动Nginx方法：
+
+启动
+启动代码格式：nginx安装目录地址 -c nginx配置文件地址
+[root@LinuxServer sbin]# /usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
+
+1、查看进程号
+
+[root@192 conf]# ps -ef | grep nginx
+root      11505      1  0 04:16 ?        00:00:00 nginx: master process /usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
+nobody    11506  11505  0 04:16 ?        00:00:00 nginx: worker process
+root      11944  10053  0 04:30 pts/0    00:00:00 grep --color=auto nginx
+
+### vue打包部署在linux服务器中
+npm run build
+1、将打包后的dist文件夹放到服务器的某个文件下
+我这里是放到了 /opt/Workspace/test_web下
+所以dist文件夹的路径为/opt/Workspace/test_web/dist,（记住这个路径，等下配置ngnix需要）
+2、配置ngnix（请先确保你的服务器已经下载了ngnix）
+打开ngnix配置文件，写入
+```
+ server {
+        listen       8099;    //端口，别人通过什么端口来访问你的前端页面
+        server_name  localhost;  //填localhost就行，服务的ip
+        root   /opt/Workspace/test_web/dist/;  #vue文件dist的完整路径 
+        sendfile        on;
+        tcp_nopush      on;
+        default_type text/html;
+        location / {
+            index  /index.html;
+            try_files $uri $uri/ /index.html;
+        }
+	
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }
+    }
+```
+3、ngnix重新加载配置文件
+退出写模式后，运行命令（否则该配置文件不生效）
+ngnix reload
+接下来，就可以愉快的访问你的页面啦
+地址 服务器地址+你在ngnix中设置的端口

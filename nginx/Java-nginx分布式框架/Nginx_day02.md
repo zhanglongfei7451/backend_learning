@@ -31,7 +31,7 @@
 
 配置的内容如下:
 
-```
+```yaml
 
 ##全局块 begin##
 #配置允许运行Nginx工作进程的用户和用户组
@@ -1414,7 +1414,7 @@ location /images {
 
 ### Rewrite功能配置
 
-Rewrite是Nginx服务器提供的一个重要基本功能，是Web服务器产品中几乎必备的功能。主要的作用是用来实现URL的重写。
+Rewrite是Nginx服务器提供的一个重要+功能，是Web服务器产品中几乎必备的功能。主要的作用是用来实现URL的重写。
 
 注意:Nginx服务器的Rewrite功能的实现依赖于PCRE的支持，因此在编译安装Nginx服务器之前，需要安装PCRE库。Nginx使用的是ngx_http_rewrite_module模块来解析和处理Rewrite功能的相关配置。
 
@@ -1885,3 +1885,48 @@ server{
 	}
 }
 ```
+# 一、zhang 
+
+```yaml
+一、报错如下
+Job for nginx.service failed because the control process exited with 
+error code. See "systemctl status nginx.service" and "journalctl -xe" 
+for details.
+二、解决原因
+1、先检查nginx配置文件正否正确
+输入nginx -t 命令，如果反回 successful表示配置文件无错误，否则说明配置文件有错误。
+[root@localhost /]# nginx -t -c /etc/nginx/nginx.conf
+如果配置文件有错误，修改配置文件后，先执行 nginx -t 命令检查配置文件无错误后，再执行nginx -s reload 重新加载配置文件命令。
+2、查看nginx服务状态，根据服务状态去判断报错原因
+输入systemctl status nginx.service 命令，查看服务状态
+[root@localhost /]# systemctl status nginx.service
+由输出的状态日志（即下图画黄色框的部分）可知，80端口被占用导致启动失败
+[root@192 conf]# systemctl status nginx.service
+● nginx.service - nginx web service
+   Loaded: loaded (/usr/lib/systemd/system/nginx.service; disabled; vendor preset: disabled)
+   Active: failed (Result: exit-code) since Sun 2023-09-24 05:51:47 PDT; 2min 42s ago
+     Docs: http://nginx.org/en/docs/
+  Process: 16826 ExecStart=/usr/local/nginx/sbin/nginx (code=exited, status=1/FAILURE)
+  Process: 16821 ExecStartPre=/usr/local/nginx/sbin/nginx -t -c /usr/local/nginx/conf/nginx.conf (code=exited, status=0/SUCCESS)
+
+Sep 24 05:51:44 192.168.61.128 nginx[16826]: nginx: [emerg] bind() to 0.0.0.0:8080 failed (98: Address already in use)
+Sep 24 05:51:45 192.168.61.128 nginx[16826]: nginx: [emerg] bind() to 0.0.0.0:8080 failed (98: Address already in use)
+Sep 24 05:51:45 192.168.61.128 nginx[16826]: nginx: [emerg] bind() to 0.0.0.0:8080 failed (98: Address already in use)
+Sep 24 05:51:46 192.168.61.128 nginx[16826]: nginx: [emerg] bind() to 0.0.0.0:8080 failed (98: Address already in use)
+Sep 24 05:51:46 192.168.61.128 nginx[16826]: nginx: [emerg] bind() to 0.0.0.0:8080 failed (98: Address already in use)
+Sep 24 05:51:47 192.168.61.128 nginx[16826]: nginx: [emerg] still could not bind()
+Sep 24 05:51:47 192.168.61.128 systemd[1]: nginx.service: control process exited, code=exited status=1
+Sep 24 05:51:47 192.168.61.128 systemd[1]: Failed to start nginx web service.
+Sep 24 05:51:47 192.168.61.128 systemd[1]: Unit nginx.service entered failed state.
+Sep 24 05:51:47 192.168.61.128 systemd[1]: nginx.service failed.
+
+三、解决方式
+1、查看80端口被哪些程序所占用，输入如下命令
+[root@localhost /]# netstat -nap | grep 80
+2、杀掉被占用的端口进程号，再次查看80端口是否有被占用，输入如下命令
+[root@localhost /]# kill -9 pid
+3、重启nginx服务，报错消失，再查看nginx服务状态显示successful。
+[root@localhost /]# systemctl start nginx
+[root@localhost /]# systemctl status nginx.service
+```
+
