@@ -376,7 +376,7 @@ yum list | grep nginx
 （4）使用yum进行安装
 
 ```
-yun install -y nginx
+yum install -y nginx
 ```
 
 （5）查看nginx的安装位置
@@ -1182,6 +1182,8 @@ Nginx服务器支持对服务日志的格式、大小、输出等进行设置，
 server块和location块都是我们要重点讲解和学习的内容，因为我们后面会对Nginx的功能进行详细讲解，所以这块内容就放到静态资源部署的地方给大家详细说明。
 
 本节我们主要来认识下Nginx默认给的nginx.conf中的相关内容，以及server块与location块在使用的时候需要注意的一些内容。
+
+ 
 
 ```
 	server {
