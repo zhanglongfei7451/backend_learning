@@ -68,3 +68,4 @@ func main() {
 	modifyArray2(b) //在modify中修改的是b的副本x
 	fmt.Println(b)  //[[1 1] [1 1] [1 1]]
 }
+

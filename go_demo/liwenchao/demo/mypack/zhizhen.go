@@ -57,4 +57,13 @@ func NewZhizhen() {
 	// make函数是无可替代的，我们在使用slice、map以及channel的时候，
 	// 都需要使用make进行初始化，然后才可以对它们进行操作
 	
+	// var b map[string]int只是声明变量b是一个map类型的变量，需要像下面的示例代码一样
+	// 使用make函数进行初始化操作之后，才能对其进行键值对赋值：
+	// var b map[string]int
+	// b = make(map[string]int, 10)
+	// b["沙河娜扎"] = 100
+	// fmt.Println(b)
+
+	// make只用于slice、map以及channel的初始化，返回的还是这三个引用类型本身
+	// 而new用于类型的内存分配，并且内存对应的值为类型零值，返回的是指向类型的指针
 }

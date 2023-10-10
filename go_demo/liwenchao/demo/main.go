@@ -11,7 +11,8 @@ func main() {
 	// mypack.NewFunc()
 	// mypack.NewZhizhen()
 	// mypack.DemoArray()
-	mypack.DemoMap()
+	// mypack.DemoMap()
 	// mypack.DemoSlice()
 	// mypack.DemoNil()
+	mypack.DemoStruct()
 }
