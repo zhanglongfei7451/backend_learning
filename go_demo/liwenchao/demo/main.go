@@ -14,5 +14,8 @@ func main() {
 	// mypack.DemoMap()
 	// mypack.DemoSlice()
 	// mypack.DemoNil()
-	mypack.DemoStruct()
+	// mypack.DemoStruct()
+	// mypack.DemoGoRuntine()
+	// mypack.DemoChannel()
+	mypack.Demo()
 }
