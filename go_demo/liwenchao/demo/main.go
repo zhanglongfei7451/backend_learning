@@ -1,8 +1,6 @@
 package main
 
-import (
-	"demo/mypack"
-)
+import "demo/lock"
 
 func main() {
 	// mypack.New()
@@ -17,5 +15,8 @@ func main() {
 	// mypack.DemoStruct()
 	// mypack.DemoGoRuntine()
 	// mypack.DemoChannel()
-	mypack.Demo()
+	//mypack.Demo()
+	//bao.Demo()
+	//chanDemo.Demo()
+	lock.Demo()
 }
