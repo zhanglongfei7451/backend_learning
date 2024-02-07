@@ -1,10 +1,6 @@
 package main
 
-import (
-	"fmt"
-	"os"
-	"time"
-)
+import "demo/mypack"
 
 func main() {
 	// mypack.New()
@@ -23,21 +19,22 @@ func main() {
 	//bao.Demo()
 	//chanDemo.Demo()
 	//lock.Demo()
-	demo()
+	//demo()
+	mypack.Kafka()
 }
 
-func demo() {
-
-	fmt.Println(time.Now().Hour())
-
-	str := fmt.Sprintf("(%d时%d分%d秒)", time.Now().Hour(), time.Now().Minute(), time.Now().Second())
-	err := os.MkdirAll("./csv/"+time.Now().Format("2006-01-02")+str, 0755)
-
-	if err != nil {
-		return
-	}
-
-}
+//func demo() {
+//
+//	fmt.Println(time.Now().Hour())
+//
+//	str := fmt.Sprintf("(%d时%d分%d秒)", time.Now().Hour(), time.Now().Minute(), time.Now().Second())
+//	err := os.MkdirAll("./csv/"+time.Now().Format("2006-01-02")+str, 0755)
+//
+//	if err != nil {
+//		return
+//	}
+//
+//}
 
 //type Sayer interface {
 //	say()

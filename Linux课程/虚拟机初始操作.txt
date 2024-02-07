@@ -1,0 +1,69 @@
+```shell
+# 关闭防火墙
+systemctl stop firewalld
+systemctl disable firewalld
+
+# 关闭selinux
+sed -i 's/enforcing/disabled/' /etc/selinux/config  # 永久
+setenforce 0  # 临时
+
+# 关闭swap
+swapoff -a  # 临时
+sed -ri 's/.*swap.*/#&/' /etc/fstab    # 永久
+
+# 关闭完swap后，一定要重启一下虚拟机！！！
+# 根据规划设置主机名
+hostnamectl set-hostname <hostname>
+
+# 在master添加hosts
+cat >> /etc/hosts << EOF
+192.168.241.129 k8s-master
+192.168.241.130 k8s-node1
+192.168.241.131 k8s-node2
+EOF
+
+
+# 将桥接的IPv4流量传递到iptables的链
+cat > /etc/sysctl.d/k8s.conf << EOF
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+EOF
+
+sysctl --system  # 生效
+
+
+# 时间同步
+yum install ntpdate -y
+ntpdate time.windows.com
+
+# 修改时区
+rm -f /etc/localtime
+sudo ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
+
+# 固定IP
+vim /etc/sysconfig/network-scripts/ifcfg-ens33
+
+
+# 修改
+BOOTPROTO="static"
+# 新增
+IPADDR="192.168.241.140" ip地址
+NETMASK="255.255.255.0"子网掩码固定
+GATEWAY="192.168.241.2"网关和VMware虚拟网络编辑器中设置的一致
+DNS1="192.168.241.2"DNS1设置为网关即可
+
+systemctl restart network 重启网卡
+```
+
+
+
+
+
+```
+虚拟机没网络
+先查看network的服务状态
+systemctl stop NetworkManager
+systemctl start network
+```
+
