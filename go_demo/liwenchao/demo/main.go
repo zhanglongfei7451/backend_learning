@@ -19,8 +19,27 @@ func main() {
 	//bao.Demo()
 	//chanDemo.Demo()
 	//lock.Demo()
+<<<<<<< HEAD
 	mypack.Kafka()
 }
+=======
+	//demo()
+	mypack.Kafka()
+}
+
+//func demo() {
+//
+//	fmt.Println(time.Now().Hour())
+//
+//	str := fmt.Sprintf("(%d时%d分%d秒)", time.Now().Hour(), time.Now().Minute(), time.Now().Second())
+//	err := os.MkdirAll("./csv/"+time.Now().Format("2006-01-02")+str, 0755)
+//
+//	if err != nil {
+//		return
+//	}
+//
+//}
+>>>>>>> 1345c31313eb9273ad99ce5c37f5d8fb72b0646f
 
 //type Sayer interface {
 //	say()

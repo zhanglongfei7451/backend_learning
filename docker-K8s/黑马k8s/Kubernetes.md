@@ -1636,7 +1636,7 @@ http://192.168.109.100:31928/
 
 **配置方式**
 
-创建一个svc-nginx.yaml，内容如下：
+创建一个svc-nginx.yaml0，内容如下：
 
 ~~~yaml
 apiVersion: v1

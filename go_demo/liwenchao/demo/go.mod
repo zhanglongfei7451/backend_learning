@@ -2,6 +2,7 @@ module demo
 
 go 1.21.0
 
+<<<<<<< HEAD
 
 require (
 	github.com/confluentinc/confluent-kafka-go v1.9.2 // indirect
@@ -24,4 +25,11 @@ require (
 	github.com/rcrowley/go-metrics v0.0.0-20201227073835-cf1acfcdf475 // indirect
 	golang.org/x/crypto v0.14.0 // indirect
 	golang.org/x/net v0.17.0 // indirect
+=======
+require github.com/segmentio/kafka-go v0.4.47
+
+require (
+	github.com/klauspost/compress v1.15.9 // indirect
+	github.com/pierrec/lz4/v4 v4.1.15 // indirect
+>>>>>>> 1345c31313eb9273ad99ce5c37f5d8fb72b0646f
 )
