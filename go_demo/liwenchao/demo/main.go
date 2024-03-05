@@ -19,12 +19,7 @@ func main() {
 	//bao.Demo()
 	//chanDemo.Demo()
 	//lock.Demo()
-<<<<<<< HEAD
-	mypack.Kafka()
-}
-=======
-	//demo()
-	mypack.Kafka()
+	mypack.Ipdb()
 }
 
 //func demo() {
@@ -39,7 +34,6 @@ func main() {
 //	}
 //
 //}
->>>>>>> 1345c31313eb9273ad99ce5c37f5d8fb72b0646f
 
 //type Sayer interface {
 //	say()
