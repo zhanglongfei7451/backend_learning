@@ -8,7 +8,7 @@ import (
 	"log"
 	"net"
 	"os"
-	"strconv"
+	"strings"
 
 	"github.com/maxmind/mmdbwriter"
 	"github.com/maxmind/mmdbwriter/mmdbtype"
@@ -25,7 +25,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	for _, file := range []string{"GeoLite2-ASN-Blocks-IPv4.csv", "GeoLite2-ASN-Blocks-IPv6.csv"} {
+	for _, file := range []string{"D:\\1—SUYAN\\learing\\backend_learning\\go_demo\\mmdbwriter\\examples\\asn-writer\\GeoLite2-ASN-Blocks-IPv4.csv"} {
 		fh, err := os.Open(file)
 		if err != nil {
 			log.Fatal(err)
@@ -45,31 +45,16 @@ func main() {
 				log.Fatal(err)
 			}
 
-			if len(row) != 3 {
-				log.Fatalf("unexpected CSV rows: %v", row)
-			}
+			parts := strings.Split(row[0], "-")
 
-			_, network, err := net.ParseCIDR(row[0])
-			if err != nil {
-				log.Fatal(err)
-			}
-
-			asn, err := strconv.Atoi(row[1])
-			if err != nil {
-				log.Fatal(err)
-			}
+			start := net.ParseIP(parts[0])
+			end := net.ParseIP(parts[1])
 
 			record := mmdbtype.Map{}
 
-			if asn != 0 {
-				record["autonomous_system_number"] = mmdbtype.Uint32(asn)
-			}
+			record["autonomous_system_organization"] = mmdbtype.String(row[1])
 
-			if row[2] != "" {
-				record["autonomous_system_organization"] = mmdbtype.String(row[2])
-			}
-
-			err = writer.Insert(network, record)
+			err = writer.InsertRange(start, end, record)
 			if err != nil {
 				log.Fatal(err)
 			}
