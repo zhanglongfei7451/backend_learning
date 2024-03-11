@@ -1,0 +1,6 @@
+.:53 {
+    log
+    forward . 8.8.8.8
+    geoip D:\1—SUYAN\DNS\Ecloud-DNS\fileagent\ECLOUD-DNS\coredns-updater\mmdb\custom_lines.mmdb
+    metadata
+}
