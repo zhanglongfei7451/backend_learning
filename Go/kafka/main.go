@@ -105,7 +105,7 @@ func main() {
 	// 定义 Kafka 主题
 	topic := "LOG_438_coredns_log_137"
 
-	mechanism, _ := scram.Mechanism(scram.SHA512, "admin", "$AXpz3U9D@eG")
+	mechanism, _ := scram.Mechanism(scram.SHA256, "admin", "!1Sd&Ao1#")
 
 	// 创建一个新的 Kafka 读取器配置
 	readerConfig := kafka.ReaderConfig{

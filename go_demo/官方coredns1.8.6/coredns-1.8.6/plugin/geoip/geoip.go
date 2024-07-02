@@ -4,7 +4,6 @@ package geoip
 import (
 	"context"
 	"fmt"
-	"github.com/coredns/coredns/plugin/metadata"
 	"net"
 	"path/filepath"
 
@@ -72,9 +71,6 @@ func newGeoIP(dbPath string) (*GeoIP, error) {
 
 // ServeDNS implements the plugin.Handler interface.
 func (g GeoIP) ServeDNS(ctx context.Context, w dns.ResponseWriter, r *dns.Msg) (int, error) {
-	fn := metadata.ValueFunc(ctx, "geoip/continent/code")
-	fmt.Println(fn())
-	
 	return plugin.NextOrFailure(pluginName, g.Next, ctx, w, r)
 }
 
