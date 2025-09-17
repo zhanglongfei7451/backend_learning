@@ -693,6 +693,25 @@ FinalShell登陆终端后，默认的工作目录就是用户的HOME目录
 
 ![image-20221027221413787](https://image-set.oss-cn-zhangjiakou.aliyuncs.com/img-out/2022/10/27/20221027221413.png)
 
+## du
+
+```yml
+查看当前目录下各子目录占用空间（按大小排序）：
+bash
+复制
+编辑
+du -sh * | sort -hr
+du -sh *：显示当前目录下所有文件和子目录的大小（human-readable）。
+
+sort -hr：按大小倒序排序（h 表示 human-readable，r 表示 reverse）。
+
+查看某个路径（例如 /home）下所有目录大小：
+bash
+复制
+编辑
+du -sh /home/* | sort -hr
+```
+
 
 
 ## iostat命令
