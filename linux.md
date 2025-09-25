@@ -130,6 +130,10 @@ Cookie: wordpress_86be02xxxxxxxxxxxxxxxxxxxc43=admin%7C152xxxxxxxxxxxxxxxxxxxxxx
 
 # 抓HTTP GET数据
 tcpdump -i eth1 'tcp[(tcp[12]>>2):4] = 0x47455420'
+
+
+#  tcpdump -i bond0.1830 -s0 -A -l host 10.253.26.218 | grep -A20 "POST"
+#  tcpdump -i bond0.1830 -s0 -A -l host 10.253.141.114 | grep -A20 "SYAN_UNHQ_queryLoginUserInfoForPdByUserId"
 ```
 
 # vim
@@ -143,5 +147,108 @@ G - Move to last line of file
 w - Move forward to next word
 b - Move backward to next word
 
+```
+
+# 网络
+
+# yum
+
+```yaml
+# YUM 源配置文件一般在
+/etc/yum.repos.d/
+文件后缀为 .repo，每个文件代表一个仓库，例如：
+CentOS-Base.repo
+epel.repo
+custom.repo
+
+
+# 一个 .repo 文件示例：
+[base]
+name=CentOS-7 - Base
+baseurl=http://mirror.centos.org/centos/7/os/x86_64/
+enabled=1
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+
+[updates]
+name=CentOS-7 - Updates
+baseurl=http://mirror.centos.org/centos/7/updates/x86_64/
+enabled=1
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+
+# 查看当前系统使用的 YUM 源
+yum repolist all
+```
+
+# JAVA
+
+
+
+## 遇到的坑
+
+### 1.缓存污染
+
+```java
+// 缓存污染
+    @Override
+    public Boolean sendVerifyCode(String userId) {
+        //如果用户在期限内已经发送了验证码
+        if(safeVerifyUtil.hasCode(userId,null)&&!safeVerifyUtil.checkResendCode(userId,null)){
+                throw new CodeVerifyException(CODE_HAS_SEND);
+        }
+        String code = safeVerifyUtil.generatedcode(6);
+        //发送验证码
+        UserInfoByUserIdReq userInfoByUserIdReq = new UserInfoByUserIdReq();
+        userInfoByUserIdReq.setUserId(userId);
+        MopUserInfoDTO mopUserInfoDTO = mopRestService.queryLoginUserInfoForPdByUserId(userInfoByUserIdReq);
+
+        if (null == mopUserInfoDTO) {
+            log.error("未查到用户{}的信息",userId);
+            throw new CodeVerifyException(USER_IS_NULL_FROM_OP, userId);
+        }
+        sendMsg(mopUserInfoDTO, code);
+        return safeVerifyUtil.saveVerifyCode(code, userId,null,null);
+    }
+
+
+
+    override fun getUserInfo(userId: String): MopUserInfoDTO {
+        //调用mop的3.1.26. 用户信息查询接口
+        val userInfoByUserIdReq = UserInfoByUserIdReq()
+        userInfoByUserIdReq.userId = userId
+
+        val mopUserInfo = mopRestService.queryLoginUserInfoForPdByUserId(userInfoByUserIdReq)
+        mopUserInfo.telephone = if (mopUserInfo.telephone != null) mopUserInfo.telephone.replaceRange(3, 7, "****") else null
+        mopUserInfo.email?.let { email ->
+            val atIndex = email.indexOf('@')
+            if (atIndex > 0) {
+                val maskedEmail = "****${email.substring(atIndex)}"
+                mopUserInfo.email = maskedEmail
+            }
+        }
+        return mopUserInfo
+    }
+
+
+
+    @Cached(name = "queryLoginUserInfoForPdByUserId",expire = 15, cacheType = CacheType.LOCAL, timeUnit = TimeUnit.MINUTES)
+    @Override
+    public MopUserInfoDTO queryLoginUserInfoForPdByUserId(UserInfoByUserIdReq loginUserInfoReq) {
+        String url = mopCommonService.buildUrlWithSign(QUERY_LOGIN_USERINFO_BY_USERID);
+        log.info("调用方法:{}, 调用参数:{}", QUERY_LOGIN_USERINFO_BY_USERID, JacksonUtils.toString(loginUserInfoReq));
+
+        JSONObject msgJson = mopCommonService.doPost(url, loginUserInfoReq);
+
+        return gson.fromJson(
+                JSONObject.fromObject(msgJson.get("body")).toString(),
+                new TypeToken<MopUserInfoDTO>() {
+                }.getType()
+        );
+    }
+
+
+
+// 接口一和接口二都调用了接口三，但接口二修改了引用对象的telephone,导致接口一无法拿到正确的手机号码
 ```
 
